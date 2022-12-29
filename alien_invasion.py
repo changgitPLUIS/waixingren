@@ -10,7 +10,9 @@ class AlienInvasion:
         """初始化游戏并创建游戏资源"""
         pygame.init()
         self.settings = Settings()
-        self.screen = pygame.display.set_mode((self.settings.screen_width,self.settings.screen_height))
+        self.screen = pygame.display.set_mode((0,0),pygame.FULLSCREEN)
+        self.settings.screen_width = self.screen.get_rect().width
+        self.settings.screen_height = self.screen.get_rect().height
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
 
@@ -19,6 +21,7 @@ class AlienInvasion:
         while True:
             self._check_events()
             self._update_screen()
+            self.ship.update()
 
     def _update_screen(self):
         '''更新屏幕上的图像，并切换到新屏幕'''
@@ -28,11 +31,35 @@ class AlienInvasion:
         # 让最近绘制的屏幕可见
         pygame.display.flip()
 
+    def _check_keydown_events(self,event):
+        '''响应按键'''
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = True
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = True
+        elif event.key == pygame.k_q:
+            sys.exit()
+
+
+    def _check_keyup_events(self,event):
+        '''响应松开'''
+        if event.key == pygame.K_RIGHT:
+            self.ship.moving_right = False
+        elif event.key == pygame.K_LEFT:
+            self.ship.moving_left = False
     def _check_events(self):
         '''响应按键和鼠标事件'''
         for event in pygame.event.get():  # 代码将会创建当前等待处理的事件的一个列表，然后使用for循环来遍历里面的事件
             if event.type == pygame.QUIT:
                 sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                self._check_keydown_events(event)
+
+            elif event.type == pygame.KEYUP:
+                self._check_keyup_events(event)
+
+
+
 
 if __name__ == "__main__":
     """创建游戏实例并运行游戏"""
