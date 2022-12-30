@@ -9,10 +9,11 @@ class Feichuan:
         #加载飞船图像并获取其外接矩形
         self.image = pygame.image.load("images/rocket.bmp")
         self.image = pygame.transform.scale(self.image, (40, 60)) #改变飞船大小
+        self.image = pygame.transform.rotate(self.image,angle=270)
         self.rect = self.image.get_rect()
 
         #对于每艘新飞船，都将其放在屏幕中央
-        self.rect.center = self.screen_rect.center
+        self.rect.midleft = self.screen_rect.midleft
 
         #移动标志
         self.moving_right = False
