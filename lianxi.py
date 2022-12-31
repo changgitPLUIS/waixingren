@@ -3,6 +3,8 @@ from feichuan import Feichuan
 import pygame
 from lianxisettings import Settings
 from lianxibullet import  LianxiBullet
+
+
 class Bluesky:
     '''管理游戏资源和行为的类'''
 
@@ -14,7 +16,6 @@ class Bluesky:
         self.feichuan = Feichuan(self)
         self.bg_color = self.settings.bg_color
         self.bullets = pygame.sprite.Group()
-
 
     def run_game(self):
         '''开始游戏的主循环'''
@@ -44,6 +45,7 @@ class Bluesky:
 
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+
         pygame.display.flip()
 
     def _check_keydown_events(self,event):
