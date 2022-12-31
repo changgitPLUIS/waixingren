@@ -3,6 +3,7 @@ import pygame
 from settings import Settings
 from ship import Ship
 from bullet import Bullet
+from alien import Alien
 
 class AlienInvasion:
     '''管理游戏资源和行为的类'''
@@ -17,6 +18,9 @@ class AlienInvasion:
         pygame.display.set_caption("Alien Invasion")
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
+        self.aliens = pygame.sprite.Group()
+
+        self._create_fleet()
 
     def run_game(self):
         '''开始游戏的主循环'''
@@ -26,8 +30,11 @@ class AlienInvasion:
             self.ship.update()
             self._update_bullets()
 
-
-
+    def _create_fleet(self):
+        '''创建外星人群'''
+        #创建一个外星人
+        alien = Alien(self)
+        self.aliens.add(alien)
 
     def _update_bullets(self):
         '''更新子弹的位置并删除消失的子弹'''
@@ -47,6 +54,7 @@ class AlienInvasion:
         self.ship.blitme()
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
+        self.aliens.draw(self.screen)
         # 让最近绘制的屏幕可见
         pygame.display.flip()
 
