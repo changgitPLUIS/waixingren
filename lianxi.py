@@ -1,13 +1,13 @@
 import sys
 from time import sleep
 import pygame
-  
+
 from lianxisettings import Settings
 from feichuan import Ship
 from lianxibullet import Bullet
 from lianxialien import Alien
 from random import randint
-from game_stats import GameStats
+from settinggame_stats import GameStats
 
 
 class AlienInvasion:
