@@ -1,16 +1,26 @@
 class Settings:
-    '''存储游戏所有设置的类'''
+    """A class to store all settings for Alien Invasion."""
 
     def __init__(self):
-        '''初始化游戏的类'''
-        #屏幕设置
+        """Initialize the game's settings."""
+        # Screen settings
         self.screen_width = 1200
         self.screen_height = 800
-        self.bg_color = (230,230,230)
+        self.bg_color = (230, 230, 230)
 
-        #子弹设置
-        self.bullet_speed = 1.0
-        self.bullet_width = 8
-        self.bullet_height = 3
-        self.bullet_color = (60,60,60)
+        # Ship settings
+        self.ship_speed = 3
+        self.ship_limit = 3
+
+        # Bullet settings
+        self.bullet_speed = 3
+        self.bullet_width = 15
+        self.bullet_height = 5
+        self.bullet_color = (60, 60, 60)
         self.bullets_allowed = 3
+
+        # Alien settings
+        self.alien_speed = 1.5
+        self.fleet_drop_speed = 10
+        # fleet_direction of 1 represents right; -1 represents left.
+        self.fleet_direction = 1

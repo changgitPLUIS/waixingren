@@ -1,29 +1,33 @@
 import pygame
 from pygame.sprite import Sprite
-class LianxiBullet(Sprite):
-    '''管理飞船和发射子弹的类'''
 
-    def __init__(self,game):
-        '''在飞船当前位置创建一个子弹对象'''
+
+class Bullet(Sprite):
+    """A class to manage bullets fired from the ship"""
+
+    def __init__(self, ai_game):
+        """Create a bullet object at the ship's current position."""
         super().__init__()
-        self.screen= game.screen
-        self.settings = game.settings
+        self.screen = ai_game.screen
+        self.settings = ai_game.settings
         self.color = self.settings.bullet_color
 
-    #在(0,0)创建一个表示子弹的矩形，再设置正确位置
-        self.rect = pygame.Rect(0,0,self.settings.bullet_width,self.settings.bullet_height)
+        # Create a bullet rect at (0, 0) and then set correct position.
+        self.rect = pygame.Rect(0, 0, self.settings.bullet_width,
+                                self.settings.bullet_height)
+        self.rect.midright = ai_game.ship.rect.midright
 
-        self.rect.midright = game.feichuan.rect.midright
-
-        #存储用小数表示的子弹位置
+        # Store the bullet's position as a decimal value.
         self.x = float(self.rect.x)
 
     def update(self):
-        '''向右移动子弹'''
+        """Move the bullet up the screen."""
+        # Update the decimal position of the bullet.
         self.x += self.settings.bullet_speed
-        #更新表示子弹的rect位置
+        # Update the rect position.
         self.rect.x = self.x
 
     def draw_bullet(self):
-        '''在屏幕上绘制子弹'''
-        pygame.draw.rect(self.screen,self.color,self.rect)
+        """Draw the bullet to the screen."""
+        pygame.draw.rect(self.screen, self.color, self.rect)
+

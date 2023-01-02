@@ -1,37 +1,47 @@
 import pygame
-class Feichuan:
-    '''管理飞船的类'''
-    def __init__(self,game):
-        '''初始化飞船并设置初始位置'''
-        self.screen = game.screen
-        self.screen_rect = game.screen.get_rect()
 
-        #加载飞船图像并获取其外接矩形
-        self.image = pygame.image.load("images/rocket.bmp")
-        self.image = pygame.transform.scale(self.image, (40, 60)) #改变飞船大小
-        self.image = pygame.transform.rotate(self.image,angle=270)
+
+class Ship:
+    """A class to manage the ship."""
+
+    def __init__(self, ai_game):
+        """Initialize the ship and set its starting position."""
+        self.screen = ai_game.screen
+        self.settings = ai_game.settings
+        self.screen_rect = ai_game.screen.get_rect()
+
+        # Load the ship image and get its rect.
+        self.image = pygame.image.load('images/ship.bmp')
+        self.image = pygame.transform.rotate(self.image,270)
         self.rect = self.image.get_rect()
 
-        #对于每艘新飞船，都将其放在屏幕中央
-        self.rect.midleft = self.screen_rect.midleft
+        # Start each new ship at the bottom center of the screen.
+        self.rect.centery = self.screen_rect.centery
 
-        #移动标志
-        self.moving_right = False
-        self.moving_left = False
+        # Store a decimal value for the ship's horizontal position.
+        self.y = float(self.rect.y)
+
+        # Movement flags
         self.moving_up = False
         self.moving_down = False
 
     def update(self):
-        '''根据移动标志来调整飞船位置'''
-        if self.moving_right and self.rect.right < self.screen_rect.right:
-            self.rect.x += 1
-        elif self.moving_left and self.rect.left > 0:
-            self.rect.x -= 1
-        elif self.moving_down and self.rect.bottom < self.screen_rect.bottom:
-            self.rect.y += 1
-        elif self.moving_up and self.rect.top > 0:
-            self.rect.y -= 1
+        """Update the ship's position based on movement flags."""
+        # Update the ship's x value, not the rect.
+        if self.moving_up and self.rect.top > 0:
+            self.y -= self.settings.ship_speed
+        if self.moving_down and self.rect.bottom < self.screen_rect.bottom:
+            self.y += self.settings.ship_speed
+
+        # Update rect object from self.x.
+        self.rect.y = self.y
 
     def blitme(self):
-        '''在指定位置绘制飞船'''
-        self.screen.blit(self.image,self.rect)
+        """Draw the ship at its current location."""
+        self.screen.blit(self.image, self.rect)
+
+    def center_ship(self):
+        """Center the ship on the screen."""
+        self.rect.centery = self.screen_rect.centery
+        self.y = float(self.rect.y)
+
